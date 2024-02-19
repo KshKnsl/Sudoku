@@ -100,6 +100,12 @@ html
 {
     background-color: #9195F6;
 }
+.selected
+{
+    z-index: 1;
+    border-color: #FF8911;
+    box-shadow: 0 0 20px #FF8911;
+}
 .right-dark-border
 {
     border-right-color: black;
