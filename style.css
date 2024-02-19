@@ -50,8 +50,8 @@ html
 .Solution-container
 {
     display: grid;
-    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px ;
-    width: 540px;
+    grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 120px ;
+    width: 680px;
     height: 60px;
     border-width: 5px;
     border-style: solid;
@@ -96,6 +96,12 @@ html
     border-color: black;
     background-color: #FDBF60;
 }
+.clear
+{
+    height: 50px;
+    margin: 5px 10px 5px 10px;
+    width: 120px;
+}
 .filled
 {
     background-color: #9195F6;
@@ -104,7 +110,8 @@ html
 {
     z-index: 1;
     border-color: #FF8911;
-    box-shadow: 0 0 20px #FF8911;
+    border-width: 2px;
+    box-shadow: 0 0 20px 5px #FF8911;
 }
 .right-dark-border
 {
@@ -113,4 +120,12 @@ html
 .down-dark-border
 {
     border-bottom-color: black;
+}
+.wrong
+{
+    background-color: #D04848;
+}
+.green
+{
+    background-color: #A1EEBD;
 }

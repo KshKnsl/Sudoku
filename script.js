@@ -120,7 +120,10 @@ function initialise_game()
         tile.classList.add("filled");
         tile.disabled=false;
       }
-      else tile.classList.add("un-filled");
+      else{
+        tile.classList.add("un-filled");
+        tile.innerText = "";
+      }
       if ((j + 1) % 3 == 0) tile.classList.add("right-dark-border");
       if ((i + 1) % 3 == 0) tile.classList.add("down-dark-border");
       gameArea.append(tile);
@@ -132,7 +135,8 @@ function solving(array)
 {
     let solTiles=document.querySelectorAll(".tile-sol");
     let prevsolTile=null;
-    for(let i=0;i<9;i++)
+    let sol=null;
+    for(let i=0;i<10;i++)
     {
         solTiles[i].addEventListener("click", (event)=>
         {
@@ -142,20 +146,54 @@ function solving(array)
             prevsolTile.classList.remove("selected");
             event.target.classList.add("selected");
             prevsolTile=event.target;
+            sol=event.target;
         });    
     }
     let prevTile=null;
     let tiles=document.querySelectorAll(".un-filled");
+    let fill=null;
     for(let i=0;i<tiles.length;i++)
     {
-        tiles[i].addEventListener("click", (event)=>{
-            console.log(event.target);
+        tiles[i].addEventListener("click", (event)=>
+        {
             let tileSelected=event.target.id;
-            console.log(tileSelected);
             if(prevTile != null)
             prevTile.classList.remove("selected");
             event.target.classList.add("selected");
             prevTile=event.target;
-        });    
+            fill=event.target;
+            let i=Number(fill.id.charAt(0)),j=Number(fill.id.charAt(2));
+            if(sol.innerText=="Clear"||sol.innerText==fill.innerText)
+            {
+                fill.innerText="";
+                fill.classList.remove("wrong");
+                array[i][j]=0;
+            }
+            else
+            {
+                 fill.innerText=Number(sol.innerText);
+                 array[i][j]=Number(sol.innerText);
+                 console.log("here");
+                 console.log(isSafe(array,i,j,array[i][j]));
+                 if(!isSafe(array,i,j,array[i][j]))
+                 fill.classList.add("wrong");
+                 else
+                 fill.classList.remove("wrong");
+            }
+        });
     }
+}
+
+function isSafe(board, row, col, c)
+{
+    for(let i=0; i<9; i++)
+    {
+        if(i!=row)
+            if(board[i][col] == c) return false;
+        if(i!=col)
+        if(board[row][i] == c) return false;
+        if(i!=col && i!=row)
+        if(board[3*(row/3) + i/3][3*(col/3) + i%3] == c) return false;
+    }
+       return true;
 }
