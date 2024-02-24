@@ -115,6 +115,7 @@ function initialise_game()
       let tile = document.createElement("button");
       tile.id = "" + i + "-" + j;
       tile.classList.add("tile");
+      tile.type="button";
       if (arr[i][j] != 0) {
         tile.innerText = arr[i][j];
         tile.classList.add("filled");
@@ -183,17 +184,22 @@ function solving(array)
         });
     }
 }
-
 function isSafe(board, row, col, c)
 {
     for(let i=0; i<9; i++)
     {
-        if(i!=row)
-            if(board[i][col] == c) return false;
-        if(i!=col)
-        if(board[row][i] == c) return false;
-        if(i!=col && i!=row)
-        if(board[3*(row/3) + i/3][3*(col/3) + i%3] == c) return false;
+        if(i!=row)      if(board[i][col] == c) return false;
+        if(i!=col)      if(board[row][i] == c) return false;
     }
-       return true;
+    const startRow = Math.floor(row / 3) * 3;
+    const startCol = Math.floor(col / 3) * 3;
+    for (let i = 0; i < 3; i++) 
+    {
+      for (let j = 0; j < 3; j++) 
+      {
+        if(startRow+i!==row&&startCol+j!==col&&board[startRow+i][startCol+j]==c)
+          return false;
+      }
+    }
+    return true;
 }

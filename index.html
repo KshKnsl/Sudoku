@@ -7,21 +7,24 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Anta&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+    <link rel="icon" type="image/x-icon" href="images/download.jpeg">
 </head>
 <body>
+    <h1 id="gameName">Sudoku</h1>
     <div class="Heading-container">
         <div class="startButton">
-            <button id="start">Start the game</button>
+            <button type="button" id="start">Start the game</button>
         </div>
+        <div><pre> </pre></div>
         <div id="Timer">
             0s
-        </div>
+        </div><div><pre> </pre></div>
         <div class="stopButton">
-            <button id="stop" disabled>End the game</button>
+            <button type="button" id="stop" disabled>End the game</button>
         </div>
     </div>
     <div class="game">
@@ -32,19 +35,49 @@
     
     <div class="game">
     <div class="Solution-container">
-        <button id="1" class="tile-sol">1</button>
-        <button id="2" class="tile-sol">2</button>
-        <button id="3" class="tile-sol">3</button>
-        <button id="4" class="tile-sol">4</button>
-        <button id="5" class="tile-sol">5</button>
-        <button id="6" class="tile-sol">6</button>
-        <button id="7" class="tile-sol">7</button>
-        <button id="8" class="tile-sol">8</button>
-        <button id="9" class="tile-sol">9</button>
-        <button id="0" class="tile-sol green clear">Clear</button>
+        <button type="button" id="1" class="tile-sol">1</button>
+        <button type="button" id="2" class="tile-sol">2</button>
+        <button type="button" id="3" class="tile-sol">3</button>
+        <button type="button" id="4" class="tile-sol">4</button>
+        <button type="button" id="5" class="tile-sol">5</button>
+        <button type="button" id="6" class="tile-sol">6</button>
+        <button type="button" id="7" class="tile-sol">7</button>
+        <button type="button" id="8" class="tile-sol">8</button>
+        <button type="button" id="9" class="tile-sol">9</button>
+        <button type="button" id="0" class="tile-sol green clear">Clear</button>
     </div>
     </div>
+
+
+    <audio id="BackGroundAudio" loop>
+        <source src="Subway_Surfers_Theme.mp3" type="audio/mpeg">
+    </audio>
+    <button type="button" id="Player" onclick="playAudio()"><i class="fa-solid fa-play"></i></button>
+    <script>
+        var x = document.getElementById("BackGroundAudio");
+        var y = document.getElementById("Player"); 
+        var flag_player=0;
+        function playAudio() 
+        {  
+            if(flag_player==0)
+            { 
+                x.currentTime = 0;
+                x.play(); flag_player=1;
+                y.style.boxShadow="0 0 0";
+            }
+            else 
+            { 
+                x.pause(); flag_player=0;
+                y.style.boxShadow="0 0 10px 10px #9195F6";
+            }
+        } 
+    </script>
     <script src="script.js"></script>
-    <a href="Rules.html">How to play?</a>
 </body>
+<div>
+    <div id="Fotter">  
+        <div><a class="links" target="_blank" href="Rules.html">How to play?</a></div>
+        <div><b>© Kush Knsl. All rights reserved.</b></div>
+    </div></div>
+</div>
 </html>
