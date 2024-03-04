@@ -9,6 +9,18 @@ html
     text-align: center;
     font-family: 'Bungee Spice';
     font-size: 3rem;
+    transition: ease-in;
+    animation-name: translate;
+    animation-duration: 1s;
+}
+@keyframes translate
+{
+    0%{
+        translate: 400px 0px;
+    }
+    100%{
+        translate: 0px 0px;
+    }
 }
 .Heading-container
 {
@@ -53,6 +65,7 @@ html
     height: 451px;
     border-width: 5px;
     border-style: solid;
+    box-shadow: 0px 0px 500px 2px #fefefeb5;
 }
 .Solution-container
 {
@@ -62,6 +75,7 @@ html
     height: 50px;
     border-width: 5px;
     border-style: solid;
+    margin-bottom: 0px;
 }
 .tile
 {
@@ -88,7 +102,7 @@ html
     100% {
       transform: scale(1);
     }
-  }
+}
 .tile-sol
 {
     display: flex;
@@ -149,14 +163,15 @@ html
     background-color: #FFD23F;
     height: 60px;
     width: 60px;
-    color: #337357;
+    color: #1b4835;
     border-radius: 50%;
     box-shadow: 0 0 10px 10px #9195F6;
     margin-left: 2px ;
-    opacity: 70%;
+    opacity: 100%;
 }
 #Fotter
 {
+    margin: 0px;
     color: aliceblue;
     display: flex;
     flex-direction: row;
@@ -237,5 +252,6 @@ html
     #Player
     {
         top: 90%;
+        opacity: 50%;
     }
 }

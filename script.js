@@ -1,9 +1,18 @@
+var doc=document.querySelector("html");
+doc.style.backgroundColor=randomColor();
+function randomColor() {
+  const goodColors = 
+  ["#e74c3c", "#2ecc71", "#3498db", "#F9F07A", "#FF5733", "#6C5B7B", "#70A288", "#DAA588", "#D98C8C", "#A58258", "#F7C548", "#B9CC52", "#6B4226", "#2D4262", "#A78C7A", "#CC8E35", "#9E8E78", "#AA8166", "#758EB7", "#B07B6E", "#7C9473", "#694F5D", "#A8B0AE", "#B59685", "#E4A7A2", "#6A0572", "#AB83A1", "#343F56", "#DCC7AA", "#3D315B", "#7E317B", "#3F3D56", "#775F5E", "#8C8C8C", "#A1C181", "#44BFC8", "#5A5E6E", "#68B0AB", "#9EBA87", "#FEDCBA", "#C8DD9A", "#AEECEF", "#C7E5E3", "#5E5E5E", "#4D7EA8", "#B4C5E4", "#E4C1F9", "#E9E4F0", "#F6F6F6", "#FFFFFF"]
+  const randomIndex = Math.floor(Math.random() * goodColors.length);
+  return goodColors[randomIndex];
+}
 const timer = document.getElementById("Timer");
 document.getElementById("start").addEventListener("click", startGame);
 document.getElementById("stop").addEventListener("click", endGame);
 let continueTimer = false,
   flag = 1;
-function startGame() {
+
+  function startGame() {
   document.getElementById("start").disabled = true;
   document.getElementById("stop").disabled = false;
   continueTimer = true;
