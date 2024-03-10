@@ -55,7 +55,7 @@ function timer_start() {
 }
 var previousQ = 0;
 
-var myTimer = setTimeout(function() {startGame();}, 7000);
+var myTimer = setTimeout(function() {startGame();}, 4100);
 
 function sampleQ() 
 {
@@ -93,15 +93,15 @@ function sampleQ()
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
   const unsolvedSudoku4 = [
-    [0, 2, 0, 8, 0, 0, 0, 0, 1],
-    [8, 0, 0, 0, 0, 0, 2, 0, 0],
-    [0, 0, 0, 0, 1, 9, 4, 8, 0],
-    [0, 0, 0, 5, 0, 0, 0, 1, 0],
-    [0, 0, 1, 0, 7, 0, 8, 0, 0],
-    [0, 9, 0, 0, 0, 6, 0, 0, 0],
-    [0, 7, 3, 9, 8, 0, 0, 0, 0],
-    [0, 0, 4, 0, 0, 0, 0, 0, 5],
-    [6, 0, 0, 0, 0, 4, 0, 3, 0],
+    [0, 0, 0, 4, 5, 6, 7, 8, 9],
+    [7, 8, 0, 1, 2, 3, 0, 5, 0],
+    [4, 5, 6, 0, 8, 0, 0, 2, 3],
+    [0, 1, 2, 8, 0, 5, 9, 0, 7],
+    [6, 9, 7, 3, 1, 2, 8, 4, 5],
+    [8, 4, 0, 6, 9, 0, 3, 1, 2],
+    [0, 0, 1, 0, 0, 4, 6, 9, 8],
+    [9, 6, 0, 2, 3, 1, 5, 0, 4],
+    [5, 0, 4, 0, 6, 8, 2, 3, 0],
   ];
   const unsolvedSudoku5 = [
     [0, 0, 3, 0, 1, 0, 0, 0, 7],
@@ -155,6 +155,7 @@ function initialise_game()
   }
   solving(arr);
 }
+
 function solving(array) 
 {
     let solTiles=document.querySelectorAll(".tile-sol");
@@ -197,12 +198,13 @@ function solving(array)
             {
                  fill.innerText=Number(sol.innerText);
                  array[i][j]=Number(sol.innerText);
-                 console.log("here");
-                 console.log(isSafe(array,i,j,array[i][j]));
+                 console.log("anna "+isSafe(array,i,j,array[i][j]));
+                 
                  if(!isSafe(array,i,j,array[i][j]))
                  fill.classList.add("wrong");
                  else
                  fill.classList.remove("wrong");
+                 checkSolved();
             }
         });
     }
@@ -240,4 +242,20 @@ function removeShadow()
   {
     solTiles[i].classList.remove("selected");   
   }
+}
+function checkSolved()
+{
+    let flagmark=true;
+    let tiles=document.querySelectorAll(".un-filled");
+    for(let i=0;i<tiles.length;i++)
+    {
+        if(tiles[i].innerText=="" || tiles[i].classList.contains("wrong"))
+        {
+            console.log("has wrong");
+            flagmark=false;
+            return;
+        }
+    }
+    console.log("winner declared");
+    winnerScreen();
 }
