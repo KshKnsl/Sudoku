@@ -1,8 +1,17 @@
+var dateContainer=document.querySelector("#DATE");
+const today = new Date();
+const dateString = today.toDateString();
+dateContainer.innerHTML=dateString;
 var doc=document.querySelector("html");
 doc.style.backgroundColor=randomColor();
 function randomColor() {
-  const goodColors = 
-  ["#e74c3c", "#2ecc71", "#3498db", "#F9F07A", "#FF5733", "#6C5B7B", "#70A288", "#DAA588", "#D98C8C", "#A58258", "#F7C548", "#B9CC52", "#6B4226", "#2D4262", "#A78C7A", "#CC8E35", "#9E8E78", "#AA8166", "#758EB7", "#B07B6E", "#7C9473", "#694F5D", "#A8B0AE", "#B59685", "#E4A7A2", "#6A0572", "#AB83A1", "#343F56", "#DCC7AA", "#3D315B", "#7E317B", "#3F3D56", "#775F5E", "#8C8C8C", "#A1C181", "#44BFC8", "#5A5E6E", "#68B0AB", "#9EBA87", "#FEDCBA", "#C8DD9A", "#AEECEF", "#C7E5E3", "#5E5E5E", "#4D7EA8", "#B4C5E4", "#E4C1F9", "#E9E4F0", "#F6F6F6", "#FFFFFF"]
+  const goodColors = [
+  "#96281B", "#0E6638", "#1F4788", "#B4B44D", "#CC3D13", "#4E4459", "#566D4F", "#8C6F5E", "#8A6E6E",
+  "#725C3C", "#E6B13B", "#8F9E35", "#432B18", "#1B2A40", "#705E51", "#916622", "#725E4F", "#7E6B60",
+  "#576D92", "#8A5E55", "#647246", "#544F58", "#757D7B", "#7F6848", "#9A4D3A", "#30043D", "#7C5C73",
+  "#1F2D3A", "#B8A68D", "#292235", "#613266", "#2F2D3A", "#4E413E", "#555555", "#6E8255", "#2B7F88",
+  "#3C414A", "#4C695D", "#587D70", "#7D8F67", "#FDC086", "#A5B662", "#8FCCED", "#A3C2C0", "#444444",
+  "#3F5C80", "#7893BD", "#C496DD", "#D2CDE6", "#EAEAEA", "#F8F8F8"]
   const randomIndex = Math.floor(Math.random() * goodColors.length);
   return goodColors[randomIndex];
 }
@@ -34,6 +43,7 @@ function endGame() {
     {
         tiles[i].disabled=true;
     }
+    removeShadow();
 }
 var count = 0;
 function timer_start() {
@@ -44,7 +54,11 @@ function timer_start() {
   }, 1000);
 }
 var previousQ = 0;
-function sampleQ() {
+
+var myTimer = setTimeout(function() {startGame();}, 7000);
+
+function sampleQ() 
+{
   const unsolvedSudoku1 = [
     [5, 3, 0, 0, 0, 7, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -134,8 +148,8 @@ function initialise_game()
         tile.classList.add("un-filled");
         tile.innerText = "";
       }
-      if ((j + 1) % 3 == 0) tile.classList.add("right-dark-border");
-      if ((i + 1) % 3 == 0) tile.classList.add("down-dark-border");
+      if ((j + 1) % 3 == 0 && j!=8) tile.classList.add("right-dark-border");
+      if ((i + 1) % 3 == 0 && i!=8) tile.classList.add("down-dark-border");
       gameArea.append(tile);
     }
   }
@@ -168,8 +182,8 @@ function solving(array)
         {
             let tileSelected=event.target.id;
             if(prevTile != null)
-            prevTile.classList.remove("selected");
-            event.target.classList.add("selected");
+            prevTile.classList.remove("selected-tile");
+            event.target.classList.add("selected-tile");
             prevTile=event.target;
             fill=event.target;
             let i=Number(fill.id.charAt(0)),j=Number(fill.id.charAt(2));
@@ -211,4 +225,19 @@ function isSafe(board, row, col, c)
       }
     }
     return true;
+}
+
+function removeShadow()
+{
+  let tiles=document.querySelectorAll(".un-filled");
+  for(let i=0;i<tiles.length;i++)
+  {
+    tiles[i].classList.remove("selected-tile");
+    tiles[i].classList.remove("wrong");
+  }
+  let solTiles=document.querySelectorAll(".tile-sol");
+  for(let i=0;i<10;i++)
+  {
+    solTiles[i].classList.remove("selected");   
+  }
 }

@@ -1,0 +1,58 @@
+.initialPage
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 1000;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: #FB9B00;
+    font-family: "Libre Franklin", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    top: -100%;
+    animation: slidetoplayer 4s normal;
+}
+.logosud
+{
+    width: 20vw;
+}
+.slide-up 
+{
+    opacity: 1;
+    animation-name: slide;
+    animation-duration: 500ms;    
+}
+@keyframes slide 
+{
+    0%
+    {
+        transform: translateY(500px);
+        opacity: 0;
+    }
+    100%
+    {
+        transform: translateY(0px);
+    }
+}
+@keyframes slidetoplayer 
+{
+    0%
+    {
+        top: 0%;
+        opacity: 1;
+    }
+    70%
+    {
+        top: 0%;
+        opacity: 1;
+    }
+    100%
+    {
+        top: -100%;
+        opacity: 0;
+    }
+}
