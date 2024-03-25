@@ -60,3 +60,23 @@
         top: -100%;
     }
 }
+@keyframes slidetoplayer2
+{
+    0%
+    {
+        top: 100%;
+        opacity: 1;
+    }
+    100%
+    {
+        top: 0%;
+    }
+}
+.winnerPage
+{
+    z-index: 9999999999999999;
+    display: none;
+    animation: slidetoplayer2 1s normal;
+    top: 0%;
+    visibility: visible;
+}

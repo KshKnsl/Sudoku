@@ -93,15 +93,15 @@ function sampleQ()
     [0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
   const unsolvedSudoku4 = [
-    [0, 0, 0, 4, 5, 6, 7, 8, 9],
-    [7, 8, 0, 1, 2, 3, 0, 5, 0],
-    [4, 5, 6, 0, 8, 0, 0, 2, 3],
-    [0, 1, 2, 8, 0, 5, 9, 0, 7],
+    [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [7, 8, 9, 1, 2, 3, 4, 5, 6],
+    [4, 5, 6, 7, 8, 9, 1, 2, 3],
+    [3, 1, 2, 8, 4, 5, 9, 6, 7],
     [6, 9, 7, 3, 1, 2, 8, 4, 5],
-    [8, 4, 0, 6, 9, 0, 3, 1, 2],
-    [0, 0, 1, 0, 0, 4, 6, 9, 8],
-    [9, 6, 0, 2, 3, 1, 5, 0, 4],
-    [5, 0, 4, 0, 6, 8, 2, 3, 0],
+    [8, 4, 5, 6, 9, 7, 3, 1, 2],
+    [2, 3, 1, 5, 7, 4, 6, 9, 8],
+    [9, 6, 0, 2, 3, 1, 5, 7, 4],
+    [5, 7, 4, 9, 6, 8, 2, 3, 1],
   ];
   const unsolvedSudoku5 = [
     [0, 0, 3, 0, 1, 0, 0, 0, 7],
@@ -258,4 +258,11 @@ function checkSolved()
     }
     console.log("winner declared");
     winnerScreen();
+}
+function winnerScreen()
+{
+  console.log("winner declared");
+  var winscreen= document.querySelector(".winnerPage");
+  winscreen.style.display = "flex";
+  console.log(winscreen.style.display);
 }
