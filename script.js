@@ -1,268 +1,219 @@
-var dateContainer=document.querySelector("#DATE");
-const today = new Date();
-const dateString = today.toDateString();
-dateContainer.innerHTML=dateString;
-var doc=document.querySelector("html");
-doc.style.backgroundColor=randomColor();
-function randomColor() {
-  const goodColors = [
-  "#96281B", "#0E6638", "#1F4788", "#B4B44D", "#CC3D13", "#4E4459", "#566D4F", "#8C6F5E", "#8A6E6E",
-  "#725C3C", "#E6B13B", "#8F9E35", "#432B18", "#1B2A40", "#705E51", "#916622", "#725E4F", "#7E6B60",
-  "#576D92", "#8A5E55", "#647246", "#544F58", "#757D7B", "#7F6848", "#9A4D3A", "#30043D", "#7C5C73",
-  "#1F2D3A", "#B8A68D", "#292235", "#613266", "#2F2D3A", "#4E413E", "#555555", "#6E8255", "#2B7F88",
-  "#3C414A", "#4C695D", "#587D70", "#7D8F67", "#FDC086", "#A5B662", "#8FCCED", "#A3C2C0", "#444444",
-  "#3F5C80", "#7893BD", "#C496DD", "#D2CDE6", "#EAEAEA", "#F8F8F8"]
-  const randomIndex = Math.floor(Math.random() * goodColors.length);
-  return goodColors[randomIndex];
-}
-const timer = document.getElementById("Timer");
-document.getElementById("start").addEventListener("click", startGame);
-document.getElementById("stop").addEventListener("click", endGame);
-let continueTimer = false,
-  flag = 1;
+const initialPage = document.getElementById('initial-page');
+const gameContainer = document.getElementById('game-container');
+const winnerPage = document.getElementById('winner-page');
+const sudokuGrid = document.getElementById('sudoku-grid');
+const numberPad = document.getElementById('number-pad');
+const startBtn = document.getElementById('start-btn');
+const checkBtn = document.getElementById('check-btn');
+const solveBtn = document.getElementById('solve-btn');
+const hintBtn = document.getElementById('hint-btn');
+const timerDisplay = document.getElementById('timer');
+const difficultySelect = document.getElementById('difficulty');
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modal-title');
+const modalMessage = document.getElementById('modal-message');
+const modalClose = document.getElementById('modal-close');
+const musicToggle = document.getElementById('music-toggle');
+const backgroundMusic = document.getElementById('background-music');
+const dateDisplay = document.getElementById('date');
+const winDateDisplay = document.getElementById('win-date');
 
-  function startGame() {
-  document.getElementById("start").disabled = true;
-  document.getElementById("stop").disabled = false;
-  continueTimer = true;
-  if (flag == 1) timer_start();
-  flag = 0;
-  initialise_game();
-}
-function endGame() {
-  document.getElementById("start").disabled = false;
-  document.getElementById("stop").disabled = true;
-  continueTimer = false;
-  let tiles=document.querySelectorAll(".tile");
-    for(let i=0;i<tiles.length;i++)
-    {
-        tiles[i].disabled=true;
-    }
-    tiles=document.querySelectorAll(".tile-sol");
-    for(let i=0;i<tiles.length;i++)
-    {
-        tiles[i].disabled=true;
-    }
-    removeShadow();
-}
-var count = 0;
-function timer_start() {
-  setInterval(() => {
-    if (!continueTimer) {
-      count = 0;
-    } else timer.innerText = count++ + "s";
-  }, 1000);
-}
-var previousQ = 0;
+let timer;
+let seconds = 0;
+let selectedCell = null;
+let puzzle = [];
+let solution = [];
 
-var myTimer = setTimeout(function() {startGame();}, 4100);
-
-function sampleQ() 
-{
-  const unsolvedSudoku1 = [
-    [5, 3, 0, 0, 0, 7, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 0, 0, 0, 7, 9],
-  ];
-  const unsolvedSudoku2 = [
-    [0, 2, 0, 0, 0, 0, 8, 4, 0],
-    [0, 0, 0, 0, 6, 1, 0, 0, 0],
-    [8, 0, 0, 5, 0, 2, 0, 0, 0],
-    [0, 4, 0, 0, 0, 0, 0, 9, 0],
-    [0, 0, 3, 0, 0, 0, 7, 0, 0],
-    [0, 9, 0, 0, 0, 0, 0, 1, 0],
-    [0, 0, 0, 7, 0, 3, 0, 0, 8],
-    [0, 0, 0, 2, 8, 0, 0, 0, 0],
-    [0, 5, 2, 0, 0, 0, 0, 3, 0],
-  ];
-  const unsolvedSudoku3 = [
-    [0, 7, 0, 0, 0, 2, 0, 0, 0],
-    [0, 0, 2, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 8, 0, 0, 4, 0],
-    [0, 0, 0, 3, 0, 0, 0, 0, 9],
-    [0, 0, 0, 6, 0, 0, 0, 0, 0],
-    [2, 1, 0, 0, 0, 0, 4, 0, 0],
-    [0, 0, 5, 0, 0, 4, 0, 0, 0],
-    [4, 0, 0, 0, 1, 0, 8, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ];
-  const unsolvedSudoku4 = [
-    [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [7, 8, 9, 1, 2, 3, 4, 5, 6],
-    [4, 5, 6, 7, 8, 9, 1, 2, 3],
-    [3, 1, 2, 8, 4, 5, 9, 6, 7],
-    [6, 9, 7, 3, 1, 2, 8, 4, 5],
-    [8, 4, 5, 6, 9, 7, 3, 1, 2],
-    [2, 3, 1, 5, 7, 4, 6, 9, 8],
-    [9, 6, 0, 2, 3, 1, 5, 7, 4],
-    [5, 7, 4, 9, 6, 8, 2, 3, 1],
-  ];
-  const unsolvedSudoku5 = [
-    [0, 0, 3, 0, 1, 0, 0, 0, 7],
-    [0, 1, 0, 0, 0, 5, 2, 0, 0],
-    [0, 0, 0, 0, 7, 0, 1, 9, 0],
-    [0, 0, 0, 9, 0, 2, 0, 0, 0],
-    [0, 8, 0, 0, 0, 0, 0, 2, 0],
-    [0, 0, 0, 1, 0, 7, 0, 0, 0],
-    [0, 4, 1, 0, 2, 0, 0, 0, 0],
-    [0, 0, 6, 3, 0, 0, 0, 7, 0],
-    [2, 0, 0, 0, 8, 0, 3, 0, 0],
-  ];
-  let random = Math.round(Math.random() * 5);
-  if (random == previousQ) return sampleQ();
-  else previousQ = random;
-  if (random == 1) return unsolvedSudoku1;
-  else if (random == 2) return unsolvedSudoku2;
-  else if (random == 3) return unsolvedSudoku3;
-  else if (random == 4) return unsolvedSudoku4;
-  else return unsolvedSudoku5;
-}
-function initialise_game() 
-{
-    let tilesol=document.querySelectorAll(".tile-sol");
-    for(let i=0;i<tilesol.length;i++)
-    {
-        tilesol[i].disabled=false;
-    }
-  let arr = sampleQ();
-  const gameArea = document.querySelector(".SudokuBox-container");
-  gameArea.innerHTML = "";
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      let tile = document.createElement("button");
-      tile.id = "" + i + "-" + j;
-      tile.classList.add("tile");
-      tile.type="button";
-      if (arr[i][j] != 0) {
-        tile.innerText = arr[i][j];
-        tile.classList.add("filled");
-        tile.disabled=false;
-      }
-      else{
-        tile.classList.add("un-filled");
-        tile.innerText = "";
-      }
-      if ((j + 1) % 3 == 0 && j!=8) tile.classList.add("right-dark-border");
-      if ((i + 1) % 3 == 0 && i!=8) tile.classList.add("down-dark-border");
-      gameArea.append(tile);
-    }
-  }
-  solving(arr);
+function showCurrentDate() {
+    const today = new Date();
+    const dateString = today.toDateString();
+    dateDisplay.textContent = dateString;
+    winDateDisplay.textContent = dateString;
 }
 
-function solving(array) 
-{
-    let solTiles=document.querySelectorAll(".tile-sol");
-    let prevsolTile=null;
-    let sol=null;
-    for(let i=0;i<10;i++)
-    {
-        solTiles[i].addEventListener("click", (event)=>
-        {
-            console.log(event.target);
-            let solSelected=event.target.id;
-            if(prevsolTile != null)
-            prevsolTile.classList.remove("selected");
-            event.target.classList.add("selected");
-            prevsolTile=event.target;
-            sol=event.target;
-        });    
+function hideInitialPage() {
+    initialPage.style.display = 'none';
+    gameContainer.style.display = 'block';
+}
+
+function showWinnerPage() {
+    gameContainer.style.display = 'none';
+    winnerPage.style.display = 'flex';
+}
+
+function generateSudoku(difficulty) {
+    // This is a placeholder function. In a real implementation, you would use a more sophisticated
+    // algorithm to generate valid Sudoku puzzles with varying difficulties.
+    const base = [
+        [5,3,4,6,7,8,9,1,2],
+        [6,7,2,1,9,5,3,4,8],
+        [1,9,8,3,4,2,5,6,7],
+        [8,5,9,7,6,1,4,2,3],
+        [4,2,6,8,5,3,7,9,1],
+        [7,1,3,9,2,4,8,5,6],
+        [9,6,1,5,3,7,2,8,4],
+        [2,8,7,4,1,9,6,3,5],
+        [3,4,5,2,8,6,1,7,9]
+    ];
+
+    let numToRemove;
+    switch(difficulty) {
+        case 'easy':
+            numToRemove = 30;
+            break;
+        case 'medium':
+            numToRemove = 40;
+            break;
+        case 'hard':
+            numToRemove = 50;
+            break;
+        default:
+            numToRemove = 30;
     }
-    let prevTile=null;
-    let tiles=document.querySelectorAll(".un-filled");
-    let fill=null;
-    for(let i=0;i<tiles.length;i++)
-    {
-        tiles[i].addEventListener("click", (event)=>
-        {
-            let tileSelected=event.target.id;
-            if(prevTile != null)
-            prevTile.classList.remove("selected-tile");
-            event.target.classList.add("selected-tile");
-            prevTile=event.target;
-            fill=event.target;
-            let i=Number(fill.id.charAt(0)),j=Number(fill.id.charAt(2));
-            if(sol.innerText=="Clear"||sol.innerText==fill.innerText)
-            {
-                fill.innerText="";
-                fill.classList.remove("wrong");
-                array[i][j]=0;
+
+    puzzle = JSON.parse(JSON.stringify(base));
+    solution = JSON.parse(JSON.stringify(base));
+
+    for (let i = 0; i < numToRemove; i++) {
+        let row = Math.floor(Math.random() * 9);
+        let col = Math.floor(Math.random() * 9);
+        while (puzzle[row][col] === 0) {
+            row = Math.floor(Math.random() * 9);
+            col = Math.floor(Math.random() * 9);
+        }
+        puzzle[row][col] = 0;
+    }
+}
+
+function renderGrid() {
+    sudokuGrid.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            if (puzzle[i][j] !== 0) {
+                cell.textContent = puzzle[i][j];
+                cell.classList.add('prefilled');
             }
-            else
-            {
-                 fill.innerText=Number(sol.innerText);
-                 array[i][j]=Number(sol.innerText);
-                 console.log("anna "+isSafe(array,i,j,array[i][j]));
-                 
-                 if(!isSafe(array,i,j,array[i][j]))
-                 fill.classList.add("wrong");
-                 else
-                 fill.classList.remove("wrong");
-                 checkSolved();
-            }
-        });
-    }
-}
-function isSafe(board, row, col, c)
-{
-    for(let i=0; i<9; i++)
-    {
-        if(i!=row)      if(board[i][col] == c) return false;
-        if(i!=col)      if(board[row][i] == c) return false;
-    }
-    const startRow = Math.floor(row / 3) * 3;
-    const startCol = Math.floor(col / 3) * 3;
-    for (let i = 0; i < 3; i++) 
-    {
-      for (let j = 0; j < 3; j++) 
-      {
-        if(startRow+i!==row&&startCol+j!==col&&board[startRow+i][startCol+j]==c)
-          return false;
-      }
-    }
-    return true;
-}
-
-function removeShadow()
-{
-  let tiles=document.querySelectorAll(".un-filled");
-  for(let i=0;i<tiles.length;i++)
-  {
-    tiles[i].classList.remove("selected-tile");
-    tiles[i].classList.remove("wrong");
-  }
-  let solTiles=document.querySelectorAll(".tile-sol");
-  for(let i=0;i<10;i++)
-  {
-    solTiles[i].classList.remove("selected");   
-  }
-}
-function checkSolved()
-{
-    let flagmark=true;
-    let tiles=document.querySelectorAll(".un-filled");
-    for(let i=0;i<tiles.length;i++)
-    {
-        if(tiles[i].innerText=="" || tiles[i].classList.contains("wrong"))
-        {
-            console.log("has wrong");
-            flagmark=false;
-            return;
+            cell.addEventListener('click', () => selectCell(cell));
+            sudokuGrid.appendChild(cell);
         }
     }
-    console.log("winner declared");
-    winnerScreen();
 }
-function winnerScreen()
-{
-  console.log("winner declared");
-  var winscreen= document.querySelector(".winnerPage");
-  winscreen.style.display = "flex";
-  console.log(winscreen.style.display);
+
+function renderNumberPad() {
+    numberPad.innerHTML = '';
+    for (let i = 1; i <= 9; i++) {
+        const button = document.createElement('button');
+        button.textContent = i;
+        button.addEventListener('click', () => fillCell(i));
+        numberPad.appendChild(button);
+    }
+    const eraseButton = document.createElement('button');
+    eraseButton.textContent = 'Erase';
+    eraseButton.addEventListener('click', () => fillCell(0));
+    numberPad.appendChild(eraseButton);
 }
+
+function selectCell(cell) {
+    if (cell.classList.contains('prefilled')) return;
+    if (selectedCell) selectedCell.classList.remove('selected');
+    selectedCell = cell;
+    selectedCell.classList.add('selected');
+}
+
+function fillCell(num) {
+    if (!selectedCell || selectedCell.classList.contains('prefilled')) return;
+    selectedCell.textContent = num === 0 ? '' : num;
+    const row = parseInt(selectedCell.dataset.row);
+    const col = parseInt(selectedCell.dataset.col);
+    puzzle[row][col] = num;
+}
+
+function startGame() {
+    hideInitialPage();
+    clearInterval(timer);
+    seconds = 0;
+    updateTimer();
+    timer = setInterval(updateTimer, 1000);
+    generateSudoku(difficultySelect.value);
+    renderGrid();
+}
+
+function updateTimer() {
+    const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    timerDisplay.textContent = `${minutes}:${secs}`;
+    seconds++;
+}
+
+function checkSolution() {
+    let correct = true;
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const cell = sudokuGrid.children[i * 9 + j];
+            if (puzzle[i][j] !== solution[i][j]) {
+                cell.classList.add('incorrect');
+                correct = false;
+            } else {
+                cell.classList.remove('incorrect');
+            }
+        }
+    }
+    if (correct) {
+        clearInterval(timer);
+        showWinnerPage();
+    } else {
+        showModal('Not quite right', 'Keep trying, you can do it!');
+    }
+}
+
+function solvePuzzle() {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            puzzle[i][j] = solution[i][j];
+            const cell = sudokuGrid.children[i * 9 + j];
+            cell.textContent = solution[i][j];
+        }
+    }
+}
+
+function getHint() {
+    if (!selectedCell) return;
+    const row = parseInt(selectedCell.dataset.row);
+    const col = parseInt(selectedCell.dataset.col);
+    selectedCell.textContent = solution[row][col];
+    puzzle[row][col] = solution[row][col];
+}
+
+function showModal(title, message) {
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    modal.style.display = 'block';
+}
+
+function toggleMusic() {
+    if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        musicToggle.textContent = '🔊';
+    } else {
+        backgroundMusic.pause();
+        musicToggle.textContent = '🔇';
+    }
+}
+
+startBtn.addEventListener('click', startGame);
+checkBtn.addEventListener('click', checkSolution);
+solveBtn.addEventListener('click', solvePuzzle);
+hintBtn.addEventListener('click', getHint);
+modalClose.addEventListener('click', () => modal.style.display = 'none');
+musicToggle.addEventListener('click', toggleMusic);
+
+showCurrentDate();
+renderNumberPad();
+
+// Start the game after a short delay to show the initial page
+setTimeout(hideInitialPage, 4000);
+

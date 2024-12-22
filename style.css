@@ -1,273 +1,228 @@
-:root::-webkit-scrollbar { width: 0 !important }
-body
-{
-    
-    margin: 0px;
-    padding: 0px;
-}
-#gameName
-{
-    padding-top: 20px;
-    text-align: center;
-    font-family: 'Bungee Spice';
-    font-size: 3rem;
-    transition: ease-in;
-    animation-name: translate;
-    animation-duration: 1s;
-}
-@keyframes translate
-{
-    0%{
-        translate: 400px 0px;
-    }
-    100%{
-        translate: 0px 0px;
-    }
-}
-.Heading-container
-{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin:  0%;
-    margin-bottom: 1vh;
-    padding: 1%;
-    align-items: center;
-    justify-content: center;
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --background-color: #f0f0f0;
+    --text-color: #333;
+    --border-color: #ccc;
 }
 
-#start, #stop
-{
-    font-family: "Kode Mono", monospace;
-    background-color: #B7C9F2;
-    font-size: 20px;
-    width: 200px;
-    height: 60px;
-    font-weight: 800;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-#Timer
-{
-    font-family: "Kode Mono", monospace;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
     text-align: center;
-    font-size: 30px;
-    width: 100px;
+    margin-bottom: 20px;
 }
-.game
-{
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.game-controls {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
-.SudokuBox-container
-{
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-    width: 450px;
-    height: 451px;
-    border-width: 5px;
-    border-style: solid;
-    margin-bottom: 1vh;
-}
-.Solution-container
-{
-    z-index: 5;
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 100px ;
-    width: 590px;
-    height: 50px;
-    border-width: 5px;
-    border-style: solid;
-    margin-bottom: 2vh;
-}
-.tile
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 45px;
-    font-family: "Anta", sans-serif;
-    width: 50px;
-    height: 50px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: rgba(79, 52, 52, 0.426);
-    margin: 0px;
-    padding: 0px;
-    animation-name: pop;
-    animation-duration: 1s;
-}
-@keyframes pop 
-{
-    0% {
-      transform: scale(2);
-    }
-    100% {
-      transform: scale(1);
-    }
-}
-.tile-sol
-{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    font-family: "Anta", sans-serif;
-    width: 50px;
-    height: 50px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-    background-color: #FDBF60;
-}
-.clear
-{
-    border-style: solid;
-    border-color: black;
-    height: 40px;
-    margin: 5px 10px 5px 10px;
-    width: 120px;
-}
-.filled
-{
-    background-color: #9195F6;
-}
-.selected-tile
-{
-    z-index: 1;
-    background-color: #FFDA00;
-}
-.selected
-{
-    z-index: 1;
-    border-color: #FF8911;
-    border-width: 1px;
-    box-shadow: 0 0 10px 3px #FF8911;
-}
-.right-dark-border
-{
-    border-right-width: 5px;
-    border-right-color: grey;
-}
-.down-dark-border
-{
-    border-bottom-width: 5px;
-    border-bottom-color: grey;
-}
-.wrong
-{
-    background-color: #D04848;
-}
-.green
-{
-    background-color: #A1EEBD;
-}
-#Player
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    font-size: 40px;
-    top: 85%;
-    left: 5px;
-    background-color: #FFD23F;
-    height: 60px;
-    width: 60px;
-    color: #1b4835;
-    border-radius: 50%;
-    box-shadow: 0 0 20px 5px white;
-    margin-left: 2px ;
-    opacity: 100%;
-}
-#Fotter
-{
-    position: fixed;
-    bottom: 2px;
-    width: 100%;
-    margin: 0px;
-    color: aliceblue;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-content: center;
-    background-color: #FF7704;
-    font-family: 'Courier New', Courier, monospace;
+
+button, select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
     border-radius: 5px;
-    flex-wrap: wrap;
-    font-weight: 900;
-}
-.links
-{
-    color: aquamarine;
-    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-@media (min-width: 600px)
-{
-    #gameName
-    {
-        margin: 0px;
-    }   
+button {
+    background-color: var(--primary-color);
+    color: white;
 }
-@media (max-width: 600px)
-{
-    #gameName
-    {
-        margin: 20px;
-    }   
-    #start, #stop
-    {
-        font-size: 15px;
-        width: fit-content;
-        height: 50px;
+
+button:hover {
+    background-color: #2980b9;
+}
+
+select {
+    background-color: white;
+    border: 1px solid var(--border-color);
+}
+
+#timer {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1px;
+    background-color: var(--border-color);
+    border: 2px solid var(--text-color);
+    margin-bottom: 20px;
+}
+
+.cell {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cell:nth-child(3n) {
+    border-right: 2px solid var(--text-color);
+}
+
+.cell:nth-child(n+19):nth-child(-n+27),
+.cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid var(--text-color);
+}
+
+.cell.prefilled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+}
+
+.cell.selected {
+    background-color: #e0e0e0;
+}
+
+.cell.incorrect {
+    color: red;
+}
+
+#number-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#number-pad button {
+    font-size: 1.2rem;
+    padding: 15px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+#music-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.initial-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #FB9B00;
+    text-align: center;
+}
+
+.initial-page .content {
+    max-width: 80%;
+}
+
+.logo-sudoku {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.5s forwards;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-    .Heading-container{
-        margin-bottom: 20px;
-    }
-    #Timer
-    {
-        font-family: "Kode Mono", monospace;
-        text-align: center;
-        font-size: 25px;
-        font-weight: 700;
-        width: fit-content;
+}
+
+.winner-page h1 {
+    font-size: 4rem;
+    margin: 20px 0;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
     }
 
-    .SudokuBox-container
-    {
-        grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
-        width: 360px;        height: 361px;
+    h1 {
+        font-size: 2rem;
     }
-    .Solution-container
-    {
-        display: grid;
-        grid-template-columns: 50px 50px 50px 50px 50px 50px;
-        width: 345px;        gap: 5px;         height: 114px;
+
+    .cell {
+        font-size: 1.2rem;
     }
-    .tile
-    {
-        font-size: 40px;
-        width: 40px;    height: 40px;
+
+    #number-pad button {
+        font-size: 1rem;
+        padding: 10px;
     }
-    .tile-sol
-    {
-        font-size: 40px;
-        margin: 2px 10px;
-    }
-    .clear
-    {
-        height: 50px;
-        width: 160px;
-    }
-    .wrong
-    {
-        background-color: #e97878ea;
-    }
-    #Player
-    {
-        top: 90%;
-        opacity: 50%;
+
+    .winner-page h1 {
+        font-size: 3rem;
     }
 }
