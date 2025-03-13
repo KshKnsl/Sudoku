@@ -2,7 +2,7 @@
 # Sudoku Game
 
 ## Overview
-This repository contains a fully functional Sudoku game implemented using HTML, CSS, and JavaScript. The game features a mobile-responsive design, allowing users to enjoy Sudoku on various devices.
+![image](https://github.com/user-attachments/assets/2d54cef3-1e1b-4656-82bb-15e8f3b5ce5b)
 
 ## Features
 - **Interactive Sudoku Gameplay:** Play Sudoku with varying levels of difficulty.
